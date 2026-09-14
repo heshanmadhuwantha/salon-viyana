@@ -667,34 +667,35 @@ p {
   font-weight: 600;
 }
 
-.testimonial-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1.5rem;
+.testimonial-placeholder {
+    max-width: 800px;
+    margin: 50px auto 0;
+    padding: 60px 30px;
+    text-align: center;
+    border: 1px solid rgba(9, 8, 7, 0.12);
+    background: rgba(255, 255, 255, 0.45);
 }
 
-.testimonial-card {
-  background: rgba(255, 255, 255, 0.66);
-  border: 1px solid var(--color-border);
-  border-radius: 22px;
-  padding: 2rem 1.7rem;
+.quote-mark {
+    display: block;
+    font-family: serif;
+    font-size: 70px;
+    line-height: 0.6;
+    opacity: 0.25;
+    margin-bottom: 25px;
 }
 
-.stars {
-  color: #d7a356;
-  margin-bottom: 1rem;
-  letter-spacing: 0.15em;
+.testimonial-placeholder p {
+    font-size: 22px;
+    font-style: italic;
+    margin-bottom: 15px;
 }
 
-.testimonial-card p {
-  font-size: 1.1rem;
-  line-height: 1.8;
-  margin-bottom: 1.2rem;
-}
-
-.testimonial-card span {
-  color: var(--color-accent);
-  font-weight: 700;
+.placeholder-note {
+    font-size: 13px;
+    opacity: 0.6;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 
 .cta-box {
