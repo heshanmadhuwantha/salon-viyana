@@ -1,10 +1,15 @@
-.nav-toggle {
-  display: none;
-}
-
 @media (max-width: 1024px) {
-  .service-grid {
+  .service-grid,
+  .experience-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .service-card {
+    min-height: 580px;
+  }
+
+  .service-visual {
+    height: 210px;
   }
 
   .hero-inner,
@@ -15,17 +20,14 @@
     grid-template-columns: 1fr;
   }
 
+  .hero-panel {
+    justify-content: flex-start;
+  }
+
   .hero-copy,
   .intro-copy,
   .bridal-copy {
     max-width: 100%;
-  }
-
-  .hero-frame,
-  .intro-image img,
-  .bridal-visual img {
-    width: min(100%, 720px);
-    margin: 0 auto;
   }
 
   .signature-grid,
@@ -40,6 +42,18 @@
     min-height: 78px;
   }
 
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .service-card {
+    min-height: 560px;
+  }
+
+  .service-visual {
+    height: 240px;
+  }
+
   .nav-toggle {
     display: inline-block;
   }
@@ -47,16 +61,16 @@
   .nav-panel {
     position: absolute;
     top: calc(100% + 0.5rem);
-    right: 0;
     left: 0;
-    background: rgba(254, 251, 247, 0.96);
-    border: 1px solid var(--color-border);
-    border-radius: 24px;
-    padding: 1.2rem;
+    right: 0;
     display: none;
     flex-direction: column;
     align-items: flex-start;
     gap: 1.2rem;
+    background: color-mix(in srgb, var(--color-bg) 96%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 1.2rem;
     box-shadow: var(--shadow-soft);
   }
 
@@ -75,12 +89,6 @@
     width: 100%;
   }
 
-  .announcement-inner {
-    justify-content: center;
-    text-align: center;
-    letter-spacing: 0.08em;
-  }
-
   .gallery-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -92,6 +100,13 @@
 }
 
 @media (max-width: 560px) {
+  .floating-whatsapp {
+    right: 16px;
+    bottom: 16px;
+    width: 46px;
+    height: 46px;
+  }
+
   .section {
     padding: 5rem 0;
   }
@@ -101,37 +116,37 @@
     padding-top: 1rem;
   }
 
-  .hero-frame img {
-    height: 620px;
+  .btn,
+  .service-card-button,
+  .signature-link,
+  .footer-booking {
+    width: 100%;
   }
 
   .hero-actions,
   .cta-actions,
-  .contact-actions {
+  .contact-actions,
+  .form-actions {
     flex-direction: column;
     align-items: stretch;
   }
 
   .hero-actions .btn,
   .cta-actions .btn,
-  .contact-actions .btn {
+  .contact-actions .btn,
+  .form-actions .btn {
     width: 100%;
   }
 
   .service-grid,
+  .experience-grid,
   .signature-grid,
   .testimonial-grid,
   .footer-inner,
   .gallery-grid,
+  .field-grid,
   .bridal-list {
     grid-template-columns: 1fr;
-  }
-
-  .footer-bottom-inner {
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 1rem 0 2rem;
   }
 
   .intro-image img,
@@ -144,6 +159,17 @@
   .gallery-tall {
     grid-column: auto;
     grid-row: auto;
+  }
+
+  .footer-bottom-inner {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem 0 2rem;
+  }
+
+  .booking-dialog {
+    padding: 1.4rem 1rem 1.2rem;
   }
 
   .lightbox-arrow {

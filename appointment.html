@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      (function () {
+        try {
+          const stored = localStorage.getItem('salon-viyana-theme');
+          const preferredDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          const theme = stored || (preferredDark ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+        } catch (error) {
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+      })();
+    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Book a Salon Viyana Kandy appointment request and plan your beauty or bridal experience in Kandy, Sri Lanka."
+    />
+    <title>Book an Appointment | Salon Viyana Kandy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+  </head>
+  <body class="appointment-page">
+    <header class="site-header" id="top">
+      <nav class="navbar container" aria-label="Main navigation">
+        <a href="index.html" class="brand" aria-label="Salon Viyana homepage">
+          <span class="brand-mark">
+            <img src="assets/images/428603491_812518010892244_3882378538150548098_n.jpg" alt="Salon Viyana logo" />
+          </span>
+          <span class="brand-text">Salon Viyana</span>
+        </a>
+
+        <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" type="button">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+
+        <div class="nav-panel">
+          <ul class="nav-menu">
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#services">Services</a></li>
+            <li><a href="index.html#bridal">Bridal</a></li>
+            <li><a href="index.html#gallery">Gallery</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+          </ul>
+          <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+            <span class="theme-toggle-icon" aria-hidden="true">☾</span>
+          </button>
+          <a href="appointment.html" class="btn btn-primary nav-cta">Book Appointment</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <section class="appointment-hero">
+        <div class="container appointment-hero-inner reveal-up">
+          <span class="eyebrow">BOOK YOUR APPOINTMENT</span>
+          <h1>Plan your next beauty moment.</h1>
+          <p>
+            Share your preferred service and time below. This booking experience is a front-end prototype for planning a future appointment flow.
+          </p>
+        </div>
+      </section>
+
+      <section class="appointment-shell">
+        <div class="container">
+          <div class="appointment-card reveal-up">
+            <div class="appointment-layout">
+              <aside class="appointment-aside">
+                <div>
+                  <span class="eyebrow">Visit us</span>
+                  <h2>Salon Viyana Kandy</h2>
+                  <p>Experience personalized beauty care, bridal styling and refined salon rituals in a calm and polished setting.</p>
+                </div>
+
+                <ul>
+                  <li>No. 274, D.S. Senanayake Veediya, Kandy 20000, Sri Lanka</li>
+                  <li>Phone: <a href="tel:+94777223336" data-phone-link>077 722 2336</a></li>
+                  <li>Hours: <span data-hours>08:00 AM – 05:30 PM</span></li>
+                </ul>
+
+                <div class="appointment-contact">
+                  <a href="https://wa.me/94777222336" target="_blank" rel="noreferrer" data-whatsapp-link>WhatsApp us</a>
+                  <a href="index.html#contact">Back to contact page</a>
+                </div>
+              </aside>
+
+              <div class="appointment-form-wrap">
+                <div class="demo-note">Prototype demo</div>
+                <div class="form-intro">
+                  <h3>Request an appointment</h3>
+                  <p>Please complete the details below and submit your request for preview.</p>
+                </div>
+
+                <form class="appointment-form" id="appointmentForm" novalidate>
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="name">Name</label>
+                      <input id="name" name="name" type="text" placeholder="Your name" required />
+                    </div>
+
+                    <div class="field">
+                      <label for="phone">Phone</label>
+                      <input id="phone" name="phone" type="tel" placeholder="Your phone number" required />
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" placeholder="Your email address" />
+                  </div>
+
+                  <div class="field">
+                    <label for="service">Service</label>
+                    <select id="service" name="service" required>
+                      <option value="">Select a service</option>
+                      <option value="Bridal Makeup">Bridal Makeup</option>
+                      <option value="Bridal Hair Styling">Bridal Hair Styling</option>
+                      <option value="Hair Styling">Hair Styling</option>
+                      <option value="Hair Colouring">Hair Colouring</option>
+                      <option value="Keratin Treatment">Keratin Treatment</option>
+                      <option value="Hair Rebonding">Hair Rebonding</option>
+                      <option value="Professional Haircuts">Professional Haircuts</option>
+                      <option value="Beauty Treatments">Beauty Treatments</option>
+                      <option value="Bridal Consultation">Bridal Consultation</option>
+                    </select>
+                  </div>
+
+                  <div class="field-grid">
+                    <div class="field">
+                      <label for="date">Preferred date</label>
+                      <input id="date" name="date" type="date" required />
+                    </div>
+
+                    <div class="field">
+                      <label for="time">Preferred time</label>
+                      <input id="time" name="time" type="time" required />
+                    </div>
+                  </div>
+
+                  <div class="field">
+                    <label for="notes">Additional note</label>
+                    <textarea id="notes" name="notes" placeholder="Tell us a little more about your request"></textarea>
+                  </div>
+
+                  <p class="form-status error" id="formStatus" aria-live="polite"></p>
+
+                  <div class="form-submit-row">
+                    <button type="button" class="btn btn-tertiary" onclick="window.location.href='index.html'">Back Home</button>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                  </div>
+                </form>
+
+                <div class="appointment-success" id="appointmentSuccess" aria-live="polite">
+                  <div class="success-header">
+                    <span class="success-badge">✓</span>
+                    <h4>Request submitted</h4>
+                  </div>
+                  <p>This is a frontend demo interaction only. No appointment has been confirmed or sent anywhere.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-brand">
+          <div class="brand">
+            <span class="brand-mark" aria-hidden="true">SV</span>
+            <span class="brand-text">Salon Viyana</span>
+          </div>
+          <p>Bridal beauty, hair styling and professional beauty care in Kandy.</p>
+        </div>
+
+        <div class="footer-links">
+          <a href="index.html#home">Home</a>
+          <a href="index.html#about">About</a>
+          <a href="index.html#services">Services</a>
+          <a href="index.html#bridal">Bridal</a>
+          <a href="index.html#gallery">Gallery</a>
+          <a href="index.html#contact">Contact</a>
+        </div>
+
+        <div class="footer-contact">
+          <a href="tel:+94777223336" data-phone-link>077 722 2336</a>
+          <a href="https://wa.me/94777222336" target="_blank" rel="noreferrer">WhatsApp</a>
+          <a href="appointment.html" class="footer-booking">Book Appointment</a>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div class="container footer-bottom-inner">
+          <span>© 2026 Salon Viyana Kandy | Developed By VerteX soft</span>
+        </div>
+      </div>
+    </footer>
+
+    <script src="assets/js/config.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script>
+      const appointmentForm = document.getElementById('appointmentForm');
+      const formStatus = document.getElementById('formStatus');
+      const appointmentSuccess = document.getElementById('appointmentSuccess');
+
+      appointmentForm?.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(appointmentForm);
+        const name = String(formData.get('name') || '').trim();
+        const phone = String(formData.get('phone') || '').trim();
+        const email = String(formData.get('email') || '').trim();
+        const service = String(formData.get('service') || '').trim();
+        const date = String(formData.get('date') || '').trim();
+        const time = String(formData.get('time') || '').trim();
+
+        if (!name || !phone || !service || !date || !time) {
+          formStatus.textContent = 'Please complete all required fields before submitting your request.';
+          formStatus.className = 'form-status error';
+          appointmentSuccess.classList.remove('is-visible');
+          return;
+        }
+
+        if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          formStatus.textContent = 'Please enter a valid email address or leave the email field blank.';
+          formStatus.className = 'form-status error';
+          appointmentSuccess.classList.remove('is-visible');
+          return;
+        }
+
+        formStatus.textContent = 'Appointment request prepared successfully. This is a frontend demo only.';
+        formStatus.className = 'form-status success';
+        appointmentSuccess.classList.add('is-visible');
+        appointmentForm.reset();
+      });
+    </script>
+  </body>
+</html>

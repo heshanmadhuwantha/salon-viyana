@@ -1,11 +1,43 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const themeToggle = document.querySelector(".theme-toggle");
+  const themeKey = "salon-viyana-theme";
+
+  const updateThemeToggle = (theme) => {
+    if (!themeToggle) return;
+    const icon = themeToggle.querySelector(".theme-toggle-icon");
+    if (!icon) return;
+    const isDark = theme === "dark";
+    icon.textContent = isDark ? "☀" : "☾";
+    themeToggle.setAttribute("aria-label", isDark ? "Switch to light mode" : "Toggle dark mode");
+    themeToggle.title = isDark ? "Switch to light mode" : "Toggle dark mode";
+  };
+
+  const applyTheme = (theme) => {
+    const selectedTheme = theme === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", selectedTheme);
+    updateThemeToggle(selectedTheme);
+    try {
+      localStorage.setItem(themeKey, selectedTheme);
+    } catch (error) {
+      // Ignore storage errors in browser-restricted environments.
+    }
+  };
+
+  const theme = document.documentElement.getAttribute("data-theme") || "light";
+  applyTheme(theme);
+
+  themeToggle?.addEventListener("click", () => {
+    const currentTheme = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const nextTheme = currentTheme === "dark" ? "light" : "dark";
+    applyTheme(nextTheme);
+  });
+
   const header = document.querySelector(".site-header");
   const navToggle = document.querySelector(".nav-toggle");
   const navPanel = document.querySelector(".nav-panel");
   const navLinks = document.querySelectorAll(".nav-menu a");
   const sections = document.querySelectorAll("main section[id]");
   const scrollProgress = document.querySelector(".scroll-progress");
-  const backToTop = document.querySelector(".back-to-top");
   const revealItems = document.querySelectorAll(".reveal-up");
   const galleryButtons = document.querySelectorAll(".gallery-item");
   const lightbox = document.querySelector(".lightbox");
@@ -13,6 +45,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.querySelector(".lightbox-close");
   const prevButton = document.querySelector(".lightbox-arrow.prev");
   const nextButton = document.querySelector(".lightbox-arrow.next");
+  const bookingModal = document.querySelector(".booking-modal");
+  const bookingForm = document.getElementById("booking-form");
+  const bookingError = document.getElementById("booking-error");
+  const bookingSuccess = document.querySelector(".booking-success");
+  const modalClose = document.querySelector(".modal-close");
+  const modalCancel = document.querySelector(".modal-cancel");
+  const modalCloseSuccess = document.querySelector(".modal-close-success");
+  const serviceSelect = document.getElementById("service");
+  const openBookingButtons = document.querySelectorAll(".open-booking");
 
   const formatPhone = (value) => {
     const digits = value.replace(/\D+/g, "");
@@ -33,6 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-phone-link]").forEach((link) => {
       const phoneValue = config.phone || "0777222336";
       link.setAttribute("href", `tel:+${phoneValue.replace(/\D+/g, "")}`);
+      if (link.textContent.trim() === "") {
+        link.textContent = formatPhone(phoneValue);
+      }
     });
 
     document.querySelectorAll("[data-phone-text]").forEach((el) => {
@@ -45,8 +89,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("[data-address]").forEach((el) => {
       const addressText = config.address || "D.S. Senanayake Veediya, Kandy, Sri Lanka";
-      const hasLineBreak = /<br\s*\/>/i.test(el.innerHTML);
-      if (hasLineBreak) {
+      if (el.innerHTML.includes("<br")) {
         el.innerHTML = addressText.replace(", Sri Lanka", "<br />Kandy, Sri Lanka");
       } else {
         el.textContent = addressText;
@@ -59,24 +102,26 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const applyImagePaths = () => {
+    if (!window.salonImages) return;
+
     const imageMap = {
-      "assets/images/hero.jpg": salonImages.hero,
-      "assets/images/bridal-01.jpg": salonImages.bridal1,
-      "assets/images/bridal-02.jpg": salonImages.bridal2,
-      "assets/images/bridal-03.jpg": salonImages.bridal3,
-      "assets/images/interior.jpg": salonImages.interior,
-      "assets/images/hair.jpg": salonImages.hair,
-      "assets/images/beauty-01.jpg": salonImages.beauty1,
-      "assets/images/beauty-02.jpg": salonImages.beauty2,
-      "assets/images/gallery-01.jpg": salonImages.gallery1,
-      "assets/images/gallery-02.jpg": salonImages.gallery2,
-      "assets/images/gallery-03.jpg": salonImages.gallery3,
-      "assets/images/gallery-04.jpg": salonImages.gallery4,
+      "assets/images/hero.jpg": window.salonImages.hero,
+      "assets/images/bridal-01.jpg": window.salonImages.bridal1,
+      "assets/images/bridal-02.jpg": window.salonImages.bridal2,
+      "assets/images/bridal-03.jpg": window.salonImages.bridal3,
+      "assets/images/interior.jpg": window.salonImages.interior,
+      "assets/images/hair.jpg": window.salonImages.hair,
+      "assets/images/beauty-01.jpg": window.salonImages.beauty1,
+      "assets/images/beauty-02.jpg": window.salonImages.beauty2,
+      "assets/images/gallery-01.jpg": window.salonImages.gallery1,
+      "assets/images/gallery-02.jpg": window.salonImages.gallery2,
+      "assets/images/gallery-03.jpg": window.salonImages.gallery3,
+      "assets/images/gallery-04.jpg": window.salonImages.gallery4,
     };
 
     document.querySelectorAll("img").forEach((img) => {
       const currentSrc = img.getAttribute("src");
-      if (imageMap[currentSrc]) {
+      if (currentSrc && imageMap[currentSrc]) {
         img.setAttribute("src", imageMap[currentSrc]);
       }
     });
@@ -84,11 +129,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const setHeaderScrollState = () => {
     if (!header) return;
-    const isScrolled = window.scrollY > 12;
-    header.classList.toggle("scrolled", isScrolled);
+    header.classList.toggle("scrolled", window.scrollY > 12);
+  };
+
+  const closeNavigation = () => {
+    if (!navPanel || !navToggle) return;
+    navPanel.classList.remove("is-open");
+    navToggle.classList.remove("is-open");
+    navToggle.setAttribute("aria-expanded", "false");
   };
 
   const toggleNavigation = () => {
+    if (!navPanel || !navToggle) return;
     const isOpen = navPanel.classList.toggle("is-open");
     navToggle.classList.toggle("is-open", isOpen);
     navToggle.setAttribute("aria-expanded", String(isOpen));
@@ -96,11 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   navToggle?.addEventListener("click", toggleNavigation);
   navPanel?.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
-      navPanel.classList.remove("is-open");
-      navToggle.classList.remove("is-open");
-      navToggle.setAttribute("aria-expanded", "false");
-    });
+    link.addEventListener("click", closeNavigation);
   });
 
   const updateActiveNav = () => {
@@ -116,38 +164,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
     navLinks.forEach((link) => {
       const href = link.getAttribute("href");
-      const matches = href === `#${activeId}`;
-      link.classList.toggle("active", matches);
+      link.classList.toggle("active", href === `#${activeId}`);
     });
   };
 
   const handleScrollProgress = () => {
+    if (!scrollProgress) return;
     const scrollable = document.documentElement.scrollHeight - window.innerHeight;
     const progress = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
     scrollProgress.style.width = `${Math.min(progress, 100)}%`;
-
-    backToTop.classList.toggle("visible", window.scrollY > 500);
   };
 
-  const revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible");
-          revealObserver.unobserve(entry.target);
-        }
-      });
-    },
-    { threshold: 0.18 }
-  );
+  if (revealItems.length) {
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.18 }
+    );
 
-  revealItems.forEach((item) => revealObserver.observe(item));
+    revealItems.forEach((item) => revealObserver.observe(item));
+  }
 
   let currentGalleryIndex = 0;
 
   const openLightbox = (index) => {
+    if (!lightbox || !lightboxImage || !window.salonGalleryImages) return;
     currentGalleryIndex = index;
-    const image = salonGalleryImages[index];
+    const image = window.salonGalleryImages[index];
     if (!image) return;
 
     lightboxImage.src = image.src;
@@ -158,14 +207,17 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const closeLightbox = () => {
+    if (!lightbox) return;
     lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
   };
 
   const updateLightboxImage = (direction) => {
-    currentGalleryIndex = (currentGalleryIndex + direction + salonGalleryImages.length) % salonGalleryImages.length;
-    const image = salonGalleryImages[currentGalleryIndex];
+    if (!window.salonGalleryImages) return;
+    currentGalleryIndex = (currentGalleryIndex + direction + window.salonGalleryImages.length) % window.salonGalleryImages.length;
+    const image = window.salonGalleryImages[currentGalleryIndex];
+    if (!image) return;
     lightboxImage.src = image.src;
     lightboxImage.alt = image.alt;
   };
@@ -188,23 +240,83 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (!lightbox.classList.contains("is-open")) return;
-
-    if (event.key === "Escape") {
-      closeLightbox();
-    }
-
-    if (event.key === "ArrowLeft") {
-      updateLightboxImage(-1);
-    }
-
-    if (event.key === "ArrowRight") {
-      updateLightboxImage(1);
+    if (lightbox && lightbox.classList.contains("is-open")) {
+      if (event.key === "Escape") closeLightbox();
+      if (event.key === "ArrowLeft") updateLightboxImage(-1);
+      if (event.key === "ArrowRight") updateLightboxImage(1);
     }
   });
 
-  backToTop?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const setBookingModalState = (isOpen, selectedService = "") => {
+    if (!bookingModal || !bookingForm || !bookingSuccess) return;
+
+    if (isOpen) {
+      bookingModal.classList.add("is-open");
+      bookingModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      if (selectedService) {
+        serviceSelect.value = selectedService;
+      }
+      bookingForm.hidden = false;
+      bookingSuccess.hidden = true;
+      bookingError.textContent = "";
+      bookingForm.reset();
+      if (selectedService) {
+        serviceSelect.value = selectedService;
+      }
+      setTimeout(() => bookingForm.querySelector("input, select")?.focus(), 50);
+    } else {
+      bookingModal.classList.remove("is-open");
+      bookingModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+  };
+
+  openBookingButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const selectedService = button.dataset.service || "";
+      setBookingModalState(true, selectedService);
+    });
+  });
+
+  const closeBookingModal = () => setBookingModalState(false);
+  modalClose?.addEventListener("click", closeBookingModal);
+  modalCancel?.addEventListener("click", closeBookingModal);
+  modalCloseSuccess?.addEventListener("click", closeBookingModal);
+  bookingModal?.addEventListener("click", (event) => {
+    if (event.target === bookingModal) closeBookingModal();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (bookingModal && bookingModal.classList.contains("is-open") && event.key === "Escape") {
+      closeBookingModal();
+    }
+  });
+
+  bookingForm?.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const formData = new FormData(bookingForm);
+    const service = formData.get("service");
+    const date = formData.get("date");
+    const time = formData.get("time");
+    const name = String(formData.get("name") || "").trim();
+    const phone = String(formData.get("phone") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+
+    if (!service || !date || !time || !name || !phone) {
+      bookingError.textContent = "Please complete all required fields before submitting your request.";
+      return;
+    }
+
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      bookingError.textContent = "Please enter a valid email address or leave this field blank.";
+      return;
+    }
+
+    bookingError.textContent = "";
+    bookingForm.hidden = true;
+    bookingSuccess.hidden = false;
   });
 
   window.addEventListener("scroll", () => {
@@ -215,9 +327,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   window.addEventListener("resize", () => {
     if (window.innerWidth > 820) {
-      navPanel?.classList.remove("is-open");
-      navToggle?.classList.remove("is-open");
-      navToggle?.setAttribute("aria-expanded", "false");
+      closeNavigation();
     }
   });
 
@@ -227,3 +337,4 @@ document.addEventListener("DOMContentLoaded", () => {
   updateActiveNav();
   handleScrollProgress();
 });
+

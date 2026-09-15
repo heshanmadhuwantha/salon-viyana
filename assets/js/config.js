@@ -3,8 +3,8 @@ const salonConfig = {
   phone: "0777222336",
   whatsapp: "94777222336",
   address: "D.S. Senanayake Veediya, Kandy, Sri Lanka",
-  instagram: "#",
-  facebook: "#",
+  instagram: "",
+  facebook: "",
   email: "",
   businessHours: "08:00 AM – 05:30 PM",
 };
