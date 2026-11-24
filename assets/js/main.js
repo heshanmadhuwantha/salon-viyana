@@ -23,7 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  const theme = document.documentElement.getAttribute("data-theme") || "light";
+  let theme = document.documentElement.getAttribute("data-theme") || "light";
+  try {
+    theme = localStorage.getItem(themeKey) || theme;
+  } catch (error) {
+    // Keep the document's default theme when browser storage is unavailable.
+  }
   applyTheme(theme);
 
   themeToggle?.addEventListener("click", () => {
@@ -36,7 +41,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const navToggle = document.querySelector(".nav-toggle");
   const navPanel = document.querySelector(".nav-panel");
   const navLinks = document.querySelectorAll(".nav-menu a");
-  const sections = document.querySelectorAll("main section[id]");
   const scrollProgress = document.querySelector(".scroll-progress");
   const revealItems = document.querySelectorAll(".reveal-up");
   const galleryButtons = document.querySelectorAll(".gallery-item");
@@ -57,6 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const formatPhone = (value) => {
     const digits = value.replace(/\D+/g, "");
+    if (digits.length === 10 && digits.startsWith("0")) {
+      return digits.replace(/^(0\d{2})(\d{3})(\d{4})$/, "$1 $2 $3");
+    }
     if (digits.length === 10) {
       return digits.replace(/^(\d{3})(\d{3})(\d{4})$/, "($1) $2-$3");
     }
@@ -73,7 +80,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.querySelectorAll("[data-phone-link]").forEach((link) => {
       const phoneValue = config.phone || "0777222336";
-      link.setAttribute("href", `tel:+${phoneValue.replace(/\D+/g, "")}`);
+      const digits = phoneValue.replace(/\D+/g, "");
+      const internationalNumber = digits.startsWith("0") ? `94${digits.slice(1)}` : digits;
+      link.setAttribute("href", `tel:+${internationalNumber}`);
       if (link.textContent.trim() === "") {
         link.textContent = formatPhone(phoneValue);
       }
@@ -105,18 +114,18 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!window.salonImages) return;
 
     const imageMap = {
-      "assets/images/hero.jpg": window.salonImages.hero,
-      "assets/images/bridal-01.jpg": window.salonImages.bridal1,
-      "assets/images/bridal-02.jpg": window.salonImages.bridal2,
-      "assets/images/bridal-03.jpg": window.salonImages.bridal3,
-      "assets/images/interior.jpg": window.salonImages.interior,
-      "assets/images/hair.jpg": window.salonImages.hair,
-      "assets/images/beauty-01.jpg": window.salonImages.beauty1,
-      "assets/images/beauty-02.jpg": window.salonImages.beauty2,
-      "assets/images/gallery-01.jpg": window.salonImages.gallery1,
-      "assets/images/gallery-02.jpg": window.salonImages.gallery2,
-      "assets/images/gallery-03.jpg": window.salonImages.gallery3,
-      "assets/images/gallery-04.jpg": window.salonImages.gallery4,
+      "assets/images/hero/hero.jpg": window.salonImages.hero,
+      "assets/images/bridal/bridal-01.jpg": window.salonImages.bridal1,
+      "assets/images/bridal/bridal-02.jpg": window.salonImages.bridal2,
+      "assets/images/bridal/bridal-03.jpg": window.salonImages.bridal3,
+      "assets/images/gallery/interior.jpg": window.salonImages.interior,
+      "assets/images/services/hair.jpg": window.salonImages.hair,
+      "assets/images/services/beauty-01.jpg": window.salonImages.beauty1,
+      "assets/images/services/beauty-02.jpg": window.salonImages.beauty2,
+      "assets/images/gallery/gallery-01.jpg": window.salonImages.gallery1,
+      "assets/images/gallery/gallery-02.jpg": window.salonImages.gallery2,
+      "assets/images/gallery/gallery-03.jpg": window.salonImages.gallery3,
+      "assets/images/gallery/gallery-04.jpg": window.salonImages.gallery4,
     };
 
     document.querySelectorAll("img").forEach((img) => {
@@ -152,19 +161,16 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const updateActiveNav = () => {
-    let activeId = "home";
-
-    sections.forEach((section) => {
-      const top = section.offsetTop - 160;
-      const height = section.offsetHeight;
-      if (window.scrollY >= top && window.scrollY < top + height) {
-        activeId = section.id;
-      }
-    });
-
+    const currentPage = window.location.pathname.split("/").pop() || "index.html";
     navLinks.forEach((link) => {
-      const href = link.getAttribute("href");
-      link.classList.toggle("active", href === `#${activeId}`);
+      const targetPage = link.getAttribute("href")?.split("#")[0];
+      const isActive = targetPage === currentPage;
+      link.classList.toggle("active", isActive);
+      if (isActive) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
     });
   };
 
@@ -191,12 +197,18 @@ document.addEventListener("DOMContentLoaded", () => {
     revealItems.forEach((item) => revealObserver.observe(item));
   }
 
+  const galleryImages = Array.from(galleryButtons)
+    .map((button) => {
+      const image = button.querySelector("img");
+      return image ? { src: image.getAttribute("src"), alt: image.alt } : null;
+    })
+    .filter((image) => image && image.src);
   let currentGalleryIndex = 0;
 
   const openLightbox = (index) => {
-    if (!lightbox || !lightboxImage || !window.salonGalleryImages) return;
+    if (!lightbox || !lightboxImage || !galleryImages.length) return;
     currentGalleryIndex = index;
-    const image = window.salonGalleryImages[index];
+    const image = galleryImages[index];
     if (!image) return;
 
     lightboxImage.src = image.src;
@@ -214,9 +226,9 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const updateLightboxImage = (direction) => {
-    if (!window.salonGalleryImages) return;
-    currentGalleryIndex = (currentGalleryIndex + direction + window.salonGalleryImages.length) % window.salonGalleryImages.length;
-    const image = window.salonGalleryImages[currentGalleryIndex];
+    if (!galleryImages.length) return;
+    currentGalleryIndex = (currentGalleryIndex + direction + galleryImages.length) % galleryImages.length;
+    const image = galleryImages[currentGalleryIndex];
     if (!image) return;
     lightboxImage.src = image.src;
     lightboxImage.alt = image.alt;
@@ -333,6 +345,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   applyConfigValues();
   applyImagePaths();
+  const requestedService = new URLSearchParams(window.location.search).get("service");
+  if (serviceSelect && requestedService && Array.from(serviceSelect.options).some((option) => option.value === requestedService)) {
+    serviceSelect.value = requestedService;
+  }
   setHeaderScrollState();
   updateActiveNav();
   handleScrollProgress();

@@ -1,0 +1,42 @@
+warning: in the working copy of 'appointment.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'assets/css/style.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'assets/js/config.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'assets/js/main.js', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+ README.md                                          |   88 [32m+[m[31m-[m
+ appointment.html                                   |   94 [32m+[m[31m-[m
+ assets/css/responsive.css                          |  107 [32m+[m[31m-[m
+ assets/css/style.css                               | 1548 [32m+[m[31m-------------------[m
+ ...24985_3651579004923450_267313118889355400_n.jpg |  Bin [31m43119[m -> [32m0[m bytes
+ ...6714_3715987381815945_4235638721611189296_n.jpg |  Bin [31m300095[m -> [32m0[m bytes
+ ...7195_3799624023452280_8492966529984653345_n.jpg |  Bin [31m225789[m -> [32m0[m bytes
+ ...03491_812518010892244_3882378538150548098_n.jpg |  Bin [31m52666[m -> [32m0[m bytes
+ ...9696_9105107722903857_3823070425801922450_n.jpg |  Bin [31m228865[m -> [32m0[m bytes
+ ...7463_9357125457702081_9053248113059278706_n.jpg |  Bin [31m358819[m -> [32m0[m bytes
+ ...5461_1099531295524246_8650624489448495855_n.jpg |  Bin [31m177939[m -> [32m0[m bytes
+ ...0022_1103483255129050_8957463666528887148_n.jpg |  Bin [31m109336[m -> [32m0[m bytes
+ ...1398_1104469628363746_8819362919223246989_n.jpg |  Bin [31m133260[m -> [32m0[m bytes
+ ...2226_1104469555030420_8422280205181594440_n.jpg |  Bin [31m205042[m -> [32m0[m bytes
+ ...6075_9464786816935944_3939462067567994028_n.jpg |  Bin [31m119313[m -> [32m0[m bytes
+ ...6697_1103326795144696_6668094928163126338_n.jpg |  Bin [31m41249[m -> [32m0[m bytes
+ ...11721_1107043558106353_807525889237944220_n.jpg |  Bin [31m326397[m -> [32m0[m bytes
+ ...4607_1108904334586942_7875419287202267298_n.jpg |  Bin [31m7235[m -> [32m0[m bytes
+ ...7876_1107062861437756_3433875672490678331_n.jpg |  Bin [31m389257[m -> [32m0[m bytes
+ assets/images/Screenshot (49).png                  |  Bin [31m421857[m -> [32m0[m bytes
+ assets/images/beauty-01.jpg                        |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/beauty-02.jpg                        |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/bridal-01.jpg                        |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/bridal-02.jpg                        |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/bridal-03.jpg                        |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/gallery-01.jpg                       |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/gallery-02.jpg                       |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/gallery-03.jpg                       |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/gallery-04.jpg                       |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/hair.jpg                             |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/hero-bg.jpg                          |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/hero.jpg                             |  Bin [31m55896[m -> [32m0[m bytes
+ assets/images/interior.jpg                         |  Bin [31m55896[m -> [32m0[m bytes
+ assets/js/config.js                                |   38 [32m+[m[31m-[m
+ assets/js/main.js                                  |   80 [32m+[m[31m-[m
+ index.html                                         |  539 [32m++[m[31m-----[m
+ 36 files changed, 374 insertions(+), 2120 deletions(-)

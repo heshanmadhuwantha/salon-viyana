@@ -30,10 +30,39 @@
     max-width: 100%;
   }
 
+  .cta-actions {
+    justify-content: flex-start;
+  }
+
   .signature-grid,
   .testimonial-grid,
   .footer-inner {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .footer-brand {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .footer-contact {
+    grid-column: 2;
+    grid-row: 1;
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .footer-links {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    width: min(100%, 360px);
+    justify-self: center;
+  }
+
+  .testimonial-grid > .testimonial-card:last-child {
+    grid-column: 1 / -1;
+    width: calc((100% - var(--grid-gap)) / 2);
+    justify-self: center;
   }
 }
 
@@ -44,6 +73,10 @@
 
   .service-grid {
     grid-template-columns: 1fr;
+  }
+
+  .home-service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .service-card {
@@ -99,16 +132,53 @@
   }
 }
 
+@media (min-width: 821px) and (max-width: 1100px) {
+  .nav-toggle {
+    display: inline-block;
+  }
+
+  .nav-panel {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    right: 0;
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    background: color-mix(in srgb, var(--color-bg) 96%, transparent);
+    border: 1px solid var(--color-border);
+    border-radius: 24px;
+    padding: 1.2rem;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .nav-panel.is-open {
+    display: flex;
+  }
+
+  .nav-menu {
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    gap: 1rem;
+  }
+
+  .nav-cta {
+    width: 100%;
+  }
+}
+
 @media (max-width: 560px) {
   .floating-whatsapp {
     right: 16px;
     bottom: 16px;
-    width: 46px;
-    height: 46px;
+    width: 48px;
+    height: 48px;
   }
 
   .section {
-    padding: 5rem 0;
+    padding: var(--section-block-space) 0;
   }
 
   .hero {
@@ -124,7 +194,6 @@
   }
 
   .hero-actions,
-  .cta-actions,
   .contact-actions,
   .form-actions {
     flex-direction: column;
@@ -132,10 +201,14 @@
   }
 
   .hero-actions .btn,
-  .cta-actions .btn,
   .contact-actions .btn,
-  .form-actions .btn {
+  .form-actions .btn,
+  .section-action .btn {
     width: 100%;
+  }
+
+  .cta-actions .btn {
+    width: auto;
   }
 
   .service-grid,
@@ -147,6 +220,28 @@
   .field-grid,
   .bridal-list {
     grid-template-columns: 1fr;
+  }
+
+  .testimonial-grid > .testimonial-card:last-child {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .footer-brand,
+  .footer-links,
+  .footer-contact {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .footer-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .footer-contact {
+    align-items: stretch;
+    text-align: left;
   }
 
   .intro-image img,

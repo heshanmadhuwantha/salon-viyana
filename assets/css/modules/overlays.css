@@ -1,0 +1,207 @@
+.booking-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: none;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(10, 9, 8, 0.62);
+}
+
+.booking-modal.is-open {
+  display: grid;
+}
+
+.booking-dialog {
+  position: relative;
+  width: min(700px, 92vw);
+  background: var(--color-card);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+}
+
+.booking-form-panel {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.booking-heading h3 {
+  margin-bottom: 0;
+}
+
+.field-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.field label {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  min-height: 52px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  padding: 0.8rem 0.9rem;
+  color: var(--color-text);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--color-muted);
+}
+
+.field textarea {
+  min-height: 130px;
+  resize: vertical;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: 2px solid rgba(86, 61, 49, 0.2);
+  border-color: rgba(86, 61, 49, 0.35);
+}
+
+.form-error {
+  min-height: 1.2rem;
+  margin: 0;
+  color: #ab2c2c;
+  font-size: 0.92rem;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: flex-end;
+}
+
+.modal-close,
+.modal-close-success {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  color: var(--color-dark);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.booking-success {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  text-align: center;
+  min-height: 280px;
+  padding: 2rem 1rem 1rem;
+}
+
+.success-badge {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(54, 124, 88, 0.12);
+  color: #2f7d50;
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.booking-success h3 {
+  margin-bottom: 0;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 9, 8, 0.82);
+  display: none;
+  place-items: center;
+  z-index: 110;
+  padding: 1rem;
+}
+
+.lightbox.is-open {
+  display: grid;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: min(880px, 92vw);
+  width: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.lightbox-content img {
+  width: 100%;
+  max-height: 82vh;
+  object-fit: cover;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.24);
+}
+
+.lightbox-close,
+.lightbox-arrow {
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: var(--color-white);
+  font-size: 2rem;
+  display: grid;
+  place-items: center;
+}
+
+.lightbox-close {
+  top: -1rem;
+  right: -1rem;
+}
+
+.lightbox-arrow {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-arrow.prev {
+  left: -1.2rem;
+}
+
+.lightbox-arrow.next {
+  right: -1.2rem;
+}
+
+.reveal-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.reveal-up.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay {
+  transition-delay: 0.08s;
+}
+
